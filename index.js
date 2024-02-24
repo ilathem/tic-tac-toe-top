@@ -21,4 +21,29 @@ const GameBoard = (function() {
     }
 })();
 
-GameBoard.printBoard();
+const PlayerO = (function() {
+    const playerName = "Player O"
+    const wins = 0;
+    
+    const incrementWins = () => wins++;
+    const getWins = () => wins;
+
+    return {
+        incrementWins,
+        getWins,
+    }
+})()
+
+const PlayerX = (function() {
+    const playerName = "Player X"
+    const wins = 0;
+    
+    const incrementWins = () => wins++;
+    const getWins = () => wins;
+
+    return {
+        incrementWins,
+        getWins,
+    }
+})()
+
