@@ -40,7 +40,6 @@ const GameBoard = (function() {
                     board[row][1],
                     board[row][2])
                 ) {
-                    console.log('a row matches!')
                     return board[row][0];
                 }
             }
@@ -90,10 +89,10 @@ const GameBoard = (function() {
             draw
         })
         if (draw) return draw;
-        if (rows) return rows;
-        if (cols) return cols 
-        if (diags) return diags; 
-        return "...and the game continues!"
+        if (rows !== '?') return rows;
+        if (cols !== '?') return cols 
+        if (diags !== '?') return diags; 
+        return ""
     }
 
     return {
@@ -141,6 +140,7 @@ const Game = (function() {
     const start = () => {
         let gameOver = false;
         let currentPlayer = 0;
+        let endGameState = '';
         while(!gameOver) {
             board.printBoard();
             console.log(`${players[currentPlayer].getPlayerName()}, your turn!`)
@@ -148,8 +148,16 @@ const Game = (function() {
             const col = prompt("enter col")
             board.placePiece(players[currentPlayer].getPlayerPiece(), row, col);
             board.printBoard();
-            console.log(board.checkBoard());
+            endGameState = board.checkBoard();
             currentPlayer = (currentPlayer + 1) % players.length;
+            if (endGameState) {
+                gameOver = true;
+            }
+        }
+        if (endGameState === 'draw') {
+            console.log("Draw!");
+        } else {
+            console.log(`Player ${endGameState} won!`);
         }
     }
 
