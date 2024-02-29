@@ -167,4 +167,42 @@ const Game = (function() {
     }
 })()
 
+const GameDisplay = (function() {
+    const main = document.querySelector("main");
+    const boardDiv = document.createElement('div');
+    boardDiv.classList.add('grid');
+    const board = new Array(3);
+    for (let i = 0; i < board.length; i++) {
+        board[i] = new Array(3);
+        for (let j = 0; j < board[i].length; j++) {
+            board[i][j] = document.createElement("div");
+            board[i][j].classList.add('grid-item');
+            board[i][j].classList.add(`item${i}${j}`);
+            board[i][j].innerText = ' ';
+            boardDiv.appendChild(board[i][j]);
+        }
+    }
+    const leftVerticalDivider = document.createElement("div");
+    leftVerticalDivider.classList.add("leftVerticalDivider");
+    leftVerticalDivider.classList.add("divider");
+    leftVerticalDivider.classList.add("vert");
+    boardDiv.appendChild(leftVerticalDivider);
+    const rightVerticalDivider = document.createElement("div");
+    rightVerticalDivider.classList.add("rightVerticalDivider");
+    rightVerticalDivider.classList.add("divider");
+    rightVerticalDivider.classList.add("vert");
+    boardDiv.appendChild(rightVerticalDivider);
+    const topHorizontalDivider = document.createElement("div");
+    topHorizontalDivider.classList.add("topHorizontalDivider");
+    topHorizontalDivider.classList.add("divider");
+    topHorizontalDivider.classList.add("horiz");
+    boardDiv.appendChild(topHorizontalDivider);
+    const bottomHorizontalDivider = document.createElement("div");
+    bottomHorizontalDivider.classList.add("bottomHorizontalDivider");
+    bottomHorizontalDivider.classList.add("divider");
+    bottomHorizontalDivider.classList.add("horiz");
+    boardDiv.appendChild(bottomHorizontalDivider);
+    main.appendChild(boardDiv);
+})()
+
 // Game.start();
