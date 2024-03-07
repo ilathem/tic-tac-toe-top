@@ -1,5 +1,5 @@
 const GameBoard = (function() {
-    console.log('setting up board')
+    // console.log('setting up board')
     let emptySpots = 9;
     const board = new Array(3);
     for (let i = 0; i < board.length; i++) {
@@ -14,14 +14,14 @@ const GameBoard = (function() {
             }
             str += '\n';
         }
-        console.log(str);
+        // console.log(str);
     } 
 
     printBoard();
 
     const placePiece = (piece, row, col) => {
-        console.log('placing piece')
-        console.log({piece, row, col})
+        // console.log('placing piece')
+        // console.log({piece, row, col})
         board[row][col] = piece;
         emptySpots--;
     }
@@ -79,7 +79,7 @@ const GameBoard = (function() {
             return '';
         }
         const checkDraw = () => {
-            console.log({emptySpots});
+            // console.log({emptySpots});
             if (emptySpots === 0) return 'draw';
             else return '';
         }
@@ -87,12 +87,12 @@ const GameBoard = (function() {
         const cols = checkCols();
         const diags = checkDiags();
         const draw = checkDraw();
-        console.log({
-            rows,
-            cols,
-            diags,
-            draw
-        })
+        // console.log({
+        //     rows,
+        //     cols,
+        //     diags,
+        //     draw
+        // })
         if (draw) return draw;
         if (rows !== '') return rows;
         if (cols !== '') return cols 
@@ -112,7 +112,7 @@ const GameBoard = (function() {
             }
         }
         emptySpots = 9;
-        console.log("Board Reset...")
+        // console.log("Board Reset...")
         printBoard();
     }
 
@@ -156,7 +156,7 @@ const Game = (function() {
     const board = GameBoard;
     let currentPlayer = 0;
     let gameOver = false;
-    console.log('setting up game')
+    // console.log('setting up game')
 
     const printPlayers = () => {
         let str = '';
@@ -165,7 +165,7 @@ const Game = (function() {
             str += ' ' + player.getWins()
             str += '\n';
         }
-        console.log(str);
+        // console.log(str);
     }
 
     const start = () => {
@@ -174,7 +174,7 @@ const Game = (function() {
         let endGameState = '';
         while(!gameOver) {
             board.printBoard();
-            console.log(`${players[currentPlayer].getPlayerName()}, your turn!`)
+            // console.log(`${players[currentPlayer].getPlayerName()}, your turn!`)
             const row = prompt("enter row")
             const col = prompt("enter col")
             board.placePiece(players[currentPlayer].getPlayerPiece(), row, col);
@@ -184,11 +184,6 @@ const Game = (function() {
             if (endGameState) {
                 gameOver = true;
             }
-        }
-        if (endGameState === 'draw') {
-            console.log("Draw!");
-        } else {
-            console.log(`Player ${endGameState} won!`);
         }
     }
 
@@ -203,21 +198,21 @@ const Game = (function() {
     const placePiece = (row, col) => {
         board.placePiece(players[currentPlayer].getPlayerPiece(), row, col);
         board.printBoard();
-        console.log(board.checkBoard());
+        // console.log(board.checkBoard());
         currentPlayer = (currentPlayer + 1) % players.length;
-        console.log(currentPlayer)
+        // console.log(currentPlayer)
     }
 
     const reset = () => {
         currentPlayer = 0;
         gameOver = false;
-        console.log('reset game')
-        console.log(gameOver);
+        // console.log('reset game')
+        // console.log(gameOver);
     }
 
     const checkEndGame = () => {
         const endGameState = GameBoard.checkBoard();
-        console.log(endGameState)
+        // console.log(endGameState)
         if (endGameState) gameOver = true;
         return endGameState;
     }
@@ -281,7 +276,7 @@ const GameDisplay = (function() {
     const gridItemClick = (event) => {
         const i = event.target.getAttribute('i')
         const j = event.target.getAttribute('j')
-        console.log(`Game.gameOver: ${Game.getGameOver()}`)
+        // console.log(`Game.gameOver: ${Game.getGameOver()}`)
         if (GameBoard.placeOpen(i, j) && !Game.getGameOver()) {
             event.target.innerText = Game.getCurrentPiece();
             Game.placePiece(i, j)
