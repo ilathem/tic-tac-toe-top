@@ -14,9 +14,35 @@ main {
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-rows: min-content min-content 1fr;
+    grid-template-rows: min-content min-content min-content 1fr;
     grid-template-columns: 1fr;
     justify-items: center;
+}
+
+.nameInputDiv {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.playerNameInput {
+    text-align: center;
+    font-size: 2vmax;
+    background: none;
+    outline: none;
+    border: 1px solid white;
+    color: white;
+}
+
+.playerNameLabel {
+    font-size: 1vmax;
+}
+
+.playerInputDiv {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
 }
 
 .message {
@@ -26,11 +52,20 @@ main {
 }
 
 .newGameBtn {
+    background: none;
+    color: white;
+    border: 1px solid white;
     width: 20vmax;
     height: 4vmax;
     max-width: 400px;
     font-size: 2vmax;
     margin: 0 auto;
+    transition: scale 200ms;
+}
+
+.newGameBtn:hover {
+    cursor: pointer;
+    scale: 1.1;
 }
 
 .grid {

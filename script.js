@@ -125,26 +125,31 @@ const GameBoard = (function() {
     }
 })();
 
-function createPlayer(piece) {
+function createPlayer(piece, name) {
     const playerPiece = piece;
-    const playerName = `Player ${piece}`
+    let playerName = name;
     const wins = 0;
     
     const getPlayerPiece = () => playerPiece;
     const getPlayerName = () => playerName;
     const incrementWins = () => wins++;
     const getWins = () => wins;
+    const changeName = (newName) => {
+        playerName = newName;
+    }
 
     return {
         getPlayerPiece,
         getPlayerName,
         incrementWins,
         getWins,
+        changeName,
     }
 }
 
-const PlayerO = createPlayer('O');
-const PlayerX = createPlayer('X');
+const PlayerO = createPlayer('O', 'Player O');
+const PlayerX = createPlayer('X', 'Player X');
+const Players = {PlayerX, PlayerO};
 
 const Game = (function() {
     const players = [PlayerX, PlayerO];
@@ -242,6 +247,36 @@ const GameDisplay = (function() {
     newGameBtn.innerText = 'New Game'
     message.classList.add('message');
     message.innerText = (`${Game.getCurrentPlayer()}, your turn!`);
+    const player1NameLabel = document.createElement('label');
+    const player2NameLabel = document.createElement('label');
+    player1NameLabel.classList.add('playerNameLabel');
+    player2NameLabel.classList.add('playerNameLabel');
+    player1NameLabel.textContent = 'Player X Name:'
+    player2NameLabel.textContent = 'Player O Name:'
+    player1NameLabel.htmlFor = 'PlayerX';
+    player2NameLabel.htmlFor = 'PlayerO';
+    const player1NameInput = document.createElement('input');
+    const player2NameInput = document.createElement('input');
+    player1NameInput.id = 'PlayerX'
+    player2NameInput.id = 'PlayerO'
+    player1NameInput.value = 'Player X';
+    player2NameInput.value = 'Player O';
+    const player1InputDiv = document.createElement('div');
+    const player2InputDiv = document.createElement('div');
+    player1InputDiv.classList.add('playerInputDiv');
+    player2InputDiv.classList.add('playerInputDiv');
+    player1InputDiv.appendChild(player1NameLabel);
+    player1InputDiv.appendChild(player1NameInput);
+    player2InputDiv.appendChild(player2NameLabel);
+    player2InputDiv.appendChild(player2NameInput);
+    player1NameInput.classList.add('playerNameInput');
+    player2NameInput.classList.add('playerNameInput');
+    const handleNameChange = (event) => {
+        Players[event.target.id].changeName(event.target.value);
+        message.innerText = (`${Game.getCurrentPlayer()}, your turn!`);
+    }
+    player1NameInput.addEventListener('keyup', e => handleNameChange(e));
+    player2NameInput.addEventListener('keyup', e => handleNameChange(e));
     // Define event listeners
     const gridItemClick = (event) => {
         const i = event.target.getAttribute('i')
@@ -255,7 +290,7 @@ const GameDisplay = (function() {
                 endGameState === 'draw' ? 
                 message.innerText = 'Draw!'
                 :
-                message.innerText = `Player ${endGameState} won!`
+                message.innerText = `${Players[`Player${endGameState}`].getPlayerName()} won!`
             } else {
                 message.innerText = (`${Game.getCurrentPlayer()}, your turn!`);
             }
@@ -277,6 +312,11 @@ const GameDisplay = (function() {
     newGameBtn.addEventListener('click', () => newGame());
     // Set up UI
     const main = document.querySelector("main");
+    const nameInputDiv = document.createElement('div');
+    nameInputDiv.classList.add('nameInputDiv');
+    nameInputDiv.appendChild(player1InputDiv);
+    nameInputDiv.appendChild(player2InputDiv);
+    main.appendChild(nameInputDiv);
     main.appendChild(message);
     main.appendChild(newGameBtn);
     const boardDiv = document.createElement('div');
